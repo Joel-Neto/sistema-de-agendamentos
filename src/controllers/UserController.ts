@@ -5,9 +5,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import * as yup from "yup";
 import {
-  sessionValidation,
-  createUserValidation,
-  updateUserValidation,
+  sessionSchema,
+  createUserSchema,
+  updateUserSchema,
 } from "../validations/user.validation";
 
 const userService = new UserService();
@@ -17,7 +17,7 @@ export class UserController {
     const { name, email, password, provider } = req.body;
 
     try {
-      await createUserValidation.validate({ name, email, password });
+      // await createUserValidation.validate({ name, email, password });
 
       const userExists = await userService.getUserByEmail(email);
 
@@ -56,7 +56,7 @@ export class UserController {
     const { email, password } = req.body;
 
     try {
-      await sessionValidation.validate({ email, password });
+      // await sessionValidation.validate({ email, password });
 
       const user = await userService.getUserByEmail(email);
 
@@ -97,7 +97,7 @@ export class UserController {
     try {
       const data = req.body;
 
-      await updateUserValidation.validate(req.body);
+      // await updateUserValidation.validate(req.body);
 
       const user = await userService.getUserById(req.user.id as string);
       if (!user) {

@@ -1,6 +1,6 @@
 import * as yup from "yup"; // Ajustado para a importação correta
 
-const sessionSchema = yup.object({
+const sessionValidation = yup.object({
   email: yup.string().required("Email é obrigatório").email("Email inválido"),
   password: yup
     .string()
@@ -8,7 +8,7 @@ const sessionSchema = yup.object({
     .min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
-const createUserSchema = yup.object({
+const createUserValidation = yup.object({
   name: yup.string().required("Nome é obrigatório"),
   email: yup.string().required("Email é obrigatório").email("Email inválido"),
   password: yup
@@ -17,7 +17,7 @@ const createUserSchema = yup.object({
     .min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
-const updateUserSchema = yup.object({
+const updateUserValidation = yup.object({
   name: yup.string().optional(),
   email: yup.string().email("Email inválido").optional(),
   password: yup
@@ -27,4 +27,4 @@ const updateUserSchema = yup.object({
     .min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
-export { sessionSchema, createUserSchema, updateUserSchema };
+export { sessionValidation, createUserValidation, updateUserValidation };

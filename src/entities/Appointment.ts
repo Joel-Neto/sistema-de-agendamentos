@@ -3,11 +3,14 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { File } from "./File";
+import { copyFile } from "node:fs";
+import { User } from "./User";
 
 @Entity("appoointments")
 export class Appointment {
@@ -17,17 +20,8 @@ export class Appointment {
   @Column({ type: "datetime" })
   date: Date;
 
-  @Column({ type: "text" })
-  name: string;
-
-  @Column({ type: "text", unique: true })
-  email: string;
-
-  @Column({ type: "text" })
-  password: string;
-
-  @Column({ type: "boolean" })
-  provider: boolean;
+  @Column({ type: "datetime", nullable: true })
+  canceled_at: Date;
 
   @CreateDateColumn({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
@@ -39,8 +33,11 @@ export class Appointment {
   })
   updated_at: Date;
 
-  // Relacionamento OneToOne com File
-  @OneToOne(() => File, (file) => file.user_id)
-  @JoinColumn({ name: "avatar_id" })
-  avatar_id: File; // Nome do campo para navegação
+  @ManyToOne(() => User, (user) => user.appointments_as_user)
+  @JoinColumn({ name: "user_id" })
+  user: User;
+
+  @ManyToOne(() => User, (user) => user.appointments_as_provider)
+  @JoinColumn({ name: "provider_id" })
+  provider: User;
 }

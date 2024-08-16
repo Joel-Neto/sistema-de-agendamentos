@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { File } from "./File";
+import { Appointment } from "./Appointment";
 
 @Entity("users")
 export class User {
@@ -40,4 +42,10 @@ export class User {
   @OneToOne(() => File, (file) => file.user_id)
   @JoinColumn({ name: "avatar_id" })
   avatar_id: File; // Nome do campo para navegação
+
+  @OneToMany(() => Appointment, (appointment) => appointment.user)
+  appointments_as_user: Appointment;
+
+  @OneToMany(() => Appointment, (appointment) => appointment.provider)
+  appointments_as_provider: Appointment;
 }
